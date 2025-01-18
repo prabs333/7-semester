@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %} Add User {% endblock title %} - Crop Recommendation System
+{% block content %}
+
+<div class="container mt-4 p-4 shadow-lg rounded bg-white col-md-6">
+    <h1 class="text-center mb-4 text-primary fw-bold">Register</h1>
+    <form method="POST" class="needs-validation" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            <label for="name" class="form-label">{{ form.name.label }}</label>
+            <!-- Add classes and placeholder directly in the field definition -->
+            {{ form.name(class_="form-control", id="name", placeholder="Enter your name") }}
+        </div>
+
+        <div class="mb-3">
+          <label for="username" class="form-label">{{ form.username.label }}</label>
+          <!-- Add classes and placeholder directly in the field definition -->
+          {{ form.username(class_="form-control", id="username", placeholder="Enter your Username") }}
+      </div>
+        
+        <div class="mb-3">
+            <label for="email" class="form-label">{{ form.email.label }}</label>
+            {{ form.email(class_="form-control", id="email", placeholder="Enter your email") }}
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">{{ form.password_hash.label }}</label>
+          {{ form.password_hash(class="form-control", id="password", placeholder="Enter your password") }}
+      </div>
+      
+      <div class="mb-3">
+          <label for="password2" class="form-label">{{ form.password_hash2.label }}</label>
+          {{ form.password_hash2(class="form-control", id="password2", placeholder="Confirm your password") }}
+      </div>
+      
+        
+      
+        <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+      </form>
+</div>
+        <br>
+        <p class="text-center fs-4 text-muted">Already have account ? Click below button to Login </p>
+        <div class="text-center">       
+        <a href="{{url_for('login')}}" class="btn btn-danger">Login</a>
+    </div>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-info mt-3">
+          <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+   
+{% endblock content %}

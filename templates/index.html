@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock title %} - Crop Recommendation System
+{% block content %}
+    <!-- landing page Section -->
+<div id="landing-page">
+    <div class="overlay"></div>
+    <div class="content">
+        <h1>Welcome to Crop Recommendation System</h1>
+        <p>Helping you choose the best crop based on soil data and other environmental factors.</p>
+        <a href="{{url_for('login')}}" class="btn btn-success">Get Started</a>
+    </div>
+</div>
+<!-- landing ends here -->
+
+<!-- About Us Section -->
+<div id="about-section">
+    <h2>About Us</h2>
+    <p>We are a passionate team dedicated to providing innovative crop recommendation solutions to support farmers and enhance agricultural productivity.</p>
+
+    <!-- Card Section -->
+    <div class="team-cards">
+      <!-- Team Member 1 -->
+      <div class="team-card">
+        <img src="/static/images/prabisha.png" alt="Team Member 1">
+        <h3>Prabisha Bajracharya</h3>
+        <p>UI/UX,QA Engineer. Learning ML</p>
+      </div>
+
+      <!-- Team Member 2 -->
+      <div class="team-card">
+        <img src="/static/images/sagar.png" alt="Team Member 2">
+        <h3>Sagar Chaudhary</h3>
+        <p>Backend Developer. Learning ML</p>
+      </div>
+
+      <!-- Team Member 3 -->
+      <div class="team-card">
+        <img src="/static/images/rojan.png" alt="Team Member 3">
+        <h3>Rojan Chitrakar</h3>
+        <p>Fronend Developer. Learning ML</p>
+      </div>
+    </div>
+  </div>
+
+<!-- About Us ends here -->
+
+<!-- Contact Us  -->
+
+<div id="contact-section">
+  <h2>Contact Us</h2>
+  <div class="contact-content">
+      <div class="contact-form">
+          <p>Feel free to get in touch with us. We'd love to hear from you!</p>
+          <form action="https://usebasin.com/f/1b736f0329af" method="POST">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required>
+
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+
+              <button type="submit">Send Message</button>
+          </form>
+      </div>
+      <div class="contact-image">
+          <img src="/static/images/contact.png" alt="Contact Us">
+      </div>
+  </div>
+</div>
+
+<!-- Contact Us section ends here -->
+
+
+{% endblock content %}

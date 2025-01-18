@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %} Dashboard {% endblock title %} - Crop Recommendation System
+{% block content %}
+
+<br>
+<h1 class="mb-4 text-center text-primary fw-bold">Dashboard</h1>
+<br>
+<p class="text-center fs-4 text-muted">Welcome to your Dashboard {{current_user.name}}</p>
+<div class="container mt-4 p-4 shadow rounded bg-white">
+    
+    <strong>Name:</strong>
+    {{current_user.name}}
+    <br>
+    <strong>Username:</strong>
+    {{current_user.username}}
+    <br>
+    <strong>User Id:</strong>
+    {{current_user.id}}
+    <br>
+    <strong>Email:</strong>
+    {{current_user.email}}
+    <br>
+    <strong>Dated Joined:</strong>{{current_user.date_added}}
+    <br>
+
+    <a href="{{url_for('logout')}}" class="btn btn-secondary">Logout</a>
+    <a href="{{ url_for('update', id=current_user.id) }}" class="btn btn-info">Update Profile</a>
+    <a href="{{ url_for('delete', id=current_user.id) }}" class="btn btn-danger ml-2">Delete</a>
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-info mt-3">
+          <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+ 
+</div>
+
+{% endblock content %}

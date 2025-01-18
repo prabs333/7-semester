@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %} Update User {% endblock title %} - Crop Recommendation System
+{% block content %}
+
+<br>
+
+
+
+<h1 class="mb-4 text-center text-primary fw-bold">Update Your Information</h1>
+<div class="container mt-4 p-4 shadow-lg rounded bg-white">
+
+    <form method="POST" class="needs-validation" novalidate>
+        {{ form.hidden_tag() }}
+        
+        <div class="mb-3">
+            <label for="name" class="form-label">{{ form.name.label }}</label>
+            {{ form.name(class="form-control", id="name", value=name_to_update.name, placeholder="Enter your name") }}
+        </div>
+
+        <div class="mb-3">
+          <label for="username" class="form-label">{{ form.username.label }}</label>
+          {{ form.username(class="form-control", id="username", value=name_to_update.username, placeholder="Enter your username") }}
+      </div>
+        
+        <div class="mb-3">
+            <label for="email" class="form-label">{{ form.email.label }}</label>
+            {{ form.email(class="form-control", id="email", value=name_to_update.email, placeholder="Enter your email") }}
+        </div>
+        
+        <!-- Flexbox container for buttons -->
+        <div class="d-flex justify-content-between">
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary">{{ form.submit.label.text or 'Update User' }}</button>
+            <!-- Delete button -->
+            <a href="{{ url_for('delete', id=name_to_update.id) }}" class="btn btn-danger ml-2">Delete</a>
+        </div>
+    </form>
+    <div class="d-grid gap-2">
+      <a href="{{ url_for('dashboard') }}" class="btn btn-success ml-2">Back to Dashboard</a>
+    </div>
+  </div>  
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-info mt-3">
+          <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+
+{% endblock content %}

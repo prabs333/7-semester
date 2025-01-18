@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %} Recommend product {% endblock title %} - Crop Recommendation System
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="text-center text-success mb-4">Crop Recommendation System</h1>
+
+    <div class="form-container mx-auto p-4 shadow-lg rounded bg-white" style="max-width: 700px;">
+        <form method="POST" action="{{ url_for('predict') }}" class="row g-3">
+            <div class="col-md-4">
+                <label for="N" class="form-label">Nitrogen (N):</label>
+                <input type="number" step="any" name="N" required class="form-control" placeholder="Enter nitrogen value" value="{{ N if N is not none else '' }}">
+            </div>
+            <div class="col-md-4">
+                <label for="P" class="form-label">Phosphorus (P):</label>
+                <input type="number" step="any" name="P" required class="form-control" placeholder="Enter phosphorus value" value="{{ P if P is not none else '' }}">
+            </div>
+            <div class="col-md-4">
+                <label for="K" class="form-label">Potassium (K):</label>
+                <input type="number" step="any" name="K" required class="form-control" placeholder="Enter potassium value" value="{{ K if K is not none else '' }}">
+            </div>
+            <div class="col-md-4">
+                <label for="temperature" class="form-label">Temperature (°C):</label>
+                <input type="number" step="any" name="temperature" required class="form-control" placeholder="Enter temperature" value="{{ temperature if temperature is not none else '' }}">
+            </div>
+            <div class="col-md-4">
+                <label for="humidity" class="form-label">Humidity (%):</label>
+                <input type="number" step="any" name="humidity" required class="form-control" placeholder="Enter humidity" value="{{ humidity if humidity is not none else '' }}">
+            </div>
+            <div class="col-md-4">
+                <label for="ph" class="form-label">pH:</label>
+                <input type="number" step="any" name="ph" required class="form-control" placeholder="Enter pH level" value="{{ ph if ph is not none else '' }}">
+            </div>
+            <div class="col-md-4">
+                <label for="rainfall" class="form-label">Rainfall (mm):</label>
+                <input type="number" step="any" name="rainfall" required class="form-control" placeholder="Enter rainfall" value="{{ rainfall if rainfall is not none else '' }}">
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-success w-100 fw-bold">Get Recommendation</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="result" class="text-center mt-4">
+        {% if recommended_crop %}
+            <h2 class="text-dark">Recommended Crop: {{ recommended_crop }}</h2>
+            <img src="{{ url_for('static', filename='images/' + recommended_crop + '.png') }}" alt="{{ recommended_crop }}" class="img-fluid mt-2" style="max-width: 100%; height: auto;">
+        {% elif error %}
+            <h2 class="text-danger">Error: {{ error }}</h2>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock content %}

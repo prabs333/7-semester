@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %} Test Password Hashing {% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Test Password Hashing</h1>
+    
+    <!-- Form for entering email and password -->
+    <form method="POST" class="needs-validation" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            <label for="email" class="form-label">{{ form.email.label }}</label>
+            {{ form.email(class_="form-control", id="email", placeholder="Enter your email") }}
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">{{ form.password.label }}</label>
+            {{ form.password(class_="form-control", id="password", placeholder="Enter your password") }}
+        </div>
+        
+        <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+    </form>
+
+    <!-- Display the entered email and password -->
+    {% if email and password %}
+    <div class="mt-4">
+        <h3>Test Result</h3>
+        <p><strong>Email:</strong> {{ email }}</p>
+        <p><strong>Password (before hashing):</strong> {{ password }}</p>
+        {% if pw_to_check %}
+        <p><strong>Stored Hash:</strong> {{ pw_to_check.password_hash }}</p>
+        <p><strong>Password Matches:</strong> {% if passed %}Yes{% else %}No{% endif %}</p>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

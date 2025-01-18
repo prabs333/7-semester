@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %} Login {% endblock title %} - Crop Recommendation System
+{% block content %}
+
+<div class="container mt-4 p-4 shadow-lg rounded bg-white col-md-6">
+    <h1 class="text-center mb-4 text-primary fw-bold">Login</h1>
+    <form method="POST" class="needs-validation" novalidate>
+        {{ form.hidden_tag() }}
+       
+        <div class="mb-3">
+          <label for="username" class="form-label">{{ form.username.label }}</label>
+          <!-- Add classes and placeholder directly in the field definition -->
+          {{ form.username(class_="form-control", id="username", placeholder="Enter your Username") }}
+      </div>
+        
+        <div class="mb-3">
+          <label for="password" class="form-label">{{ form.password.label }}</label>
+          {{ form.password(class="form-control", id="password", placeholder="Enter your password") }}
+      </div>
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+      </div>
+    </form>
+    <br>
+        <p class="text-center fs-4 text-muted">Don't Have Account ? Register Here  </p>
+        <div class="text-center">
+          <div class="d-grid gap-2">
+        <a href="{{url_for('add_user')}}" class="btn btn-secondary">Register</a>
+      </div>       
+    </div>
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-info mt-3">
+          <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+</div>
+{% endblock content %}
