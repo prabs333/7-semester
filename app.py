@@ -57,6 +57,22 @@ def predict():
             ph = float(request.form['ph'])
             rainfall = float(request.form['rainfall'])
 
+            # Validation rules
+            if N <= 0 or N > 150:
+                raise ValueError("Nitrogen (N) value must be between 1 and 150.")
+            if P <= 0 or P > 150:
+                raise ValueError("Phosphorus (P) value must be between 1 and 150.")
+            if K <= 0 or K > 200:
+                raise ValueError("Potassium (K) value must be between 1 and 200.")
+            if temperature <= 0 or temperature > 45:
+                raise ValueError("Temperature must be between 1 and 45°C.")
+            if humidity < 10 or humidity > 100:
+                raise ValueError("Humidity must be between 10% and 100%.")
+            if ph < 0 or ph > 9:
+                raise ValueError("pH value must be between 0 and 9.")
+            if rainfall < 100 or rainfall > 300:
+                raise ValueError("Rainfall must be between 100mm and 300mm.")
+
             # Prepare the input for the model
             input_data = pd.DataFrame([[N, P, K, temperature, humidity, ph, rainfall]],
                                        columns=['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall'])
@@ -76,10 +92,17 @@ def predict():
                                    ph=ph, rainfall=rainfall)
 
         return render_template('predict.html')
-    
-    except Exception as e:
-        return render_template('predict.html', error=str(e))
 
+    except Exception as e:
+        # Render the template with the error message
+        return render_template('predict.html', error=str(e),
+                               N=request.form.get('N', ''),
+                               P=request.form.get('P', ''),
+                               K=request.form.get('K', ''),
+                               temperature=request.form.get('temperature', ''),
+                               humidity=request.form.get('humidity', ''),
+                               ph=request.form.get('ph', ''),
+                               rainfall=request.form.get('rainfall', ''))
 
 # login page
 @app.route('/login', methods=['GET','POST'])
@@ -162,28 +185,28 @@ with app.app_context():
 # for adding the user
 @app.route('/users/add', methods=['GET', 'POST'])
 def add_user():
-    name = None   
     form = UserForm()
-    # Validating the user entered name and email are not present in the database
     if form.validate_on_submit():
-        user = Users.query.filter_by(email=form.email.data).first()
-        if user is None:
-            #Hash the password
-            hashed_pw = generate_password_hash(form.password_hash.data,method= "pbkdf2:sha256")
-            user = Users(username=form.username.data,name=form.name.data, email=form.email.data,password_hash=hashed_pw)
-            db.session.add(user)
-            db.session.commit()
+        # Check if the username already exists
+        user = Users.query.filter_by(username=form.username.data).first()
+        if user:
+            flash("Username already exists. Please choose a different one.", "danger")
+            return redirect(url_for('add_user'))
 
-        name = form.name.data
-        form.name.data = ''
-        form.username.data=''
-        form.email.data = ''
-        form.password_hash.data=''
-        form.password_hash2.data=''
-        flash("User Added Successfully!")
+        # Add the user if they don't exist
+        hashed_pw = generate_password_hash(form.password_hash.data, method="pbkdf2:sha256")
+        user = Users(
+            name=form.name.data,
+            username=form.username.data,
+            email=form.email.data,
+            password_hash=hashed_pw
+        )
+        db.session.add(user)
+        db.session.commit()
+        flash("User added successfully!", "success")
+        return redirect(url_for('add_user'))
 
-    return render_template("add_user.html", form=form, name=name)
-
+    return render_template('add_user.html', form=form)
 #for updating the user
 @app.route('/update/<int:id>',methods=['GET','POST'])
 def update(id):
